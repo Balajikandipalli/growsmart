@@ -5,6 +5,7 @@ import PlantCard from '@/components/PlantCard';
 import PlantDetails from '@/components/PlantDetails';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
+import { API_BASE_URL } from '@/lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Loader2 } from 'lucide-react';
 
@@ -21,7 +22,7 @@ export default function SearchPage() {
     // Fetch favorites to mark them
     useEffect(() => {
         if (user) {
-            fetch('http://localhost:5000/api/plants/favorites', {
+            fetch(`${API_BASE_URL}/api/plants/favorites`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             })
                 .then((res) => res.json())
@@ -40,7 +41,7 @@ export default function SearchPage() {
 
         setLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/plants/search?q=${query}`);
+            const res = await fetch(`${API_BASE_URL}/api/plants/search?q=${query}`);
             const data = await res.json();
             setPlants(data.data || []);
         } catch (error) {
@@ -53,7 +54,7 @@ export default function SearchPage() {
     const handleDetails = async (id: number) => {
         setDetailsLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/plants/${id}`);
+            const res = await fetch(`${API_BASE_URL}/api/plants/${id}`);
             const data = await res.json();
             setSelectedPlant(data.data);
         } catch (error) {
@@ -75,7 +76,7 @@ export default function SearchPage() {
         }
 
         try {
-            const res = await fetch('http://localhost:5000/api/plants/favorites', {
+            const res = await fetch(`${API_BASE_URL}/api/plants/favorites`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -170,4 +171,3 @@ export default function SearchPage() {
         </div>
     );
 }
-

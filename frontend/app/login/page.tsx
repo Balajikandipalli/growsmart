@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
+import { API_BASE_URL } from '@/lib/api';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
@@ -20,7 +21,7 @@ export default function LoginPage() {
         setError('');
         setIsLoading(true);
         try {
-            const res = await fetch('http://localhost:5000/api/auth/login', {
+            const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

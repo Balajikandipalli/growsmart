@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 import PlantDetails from '@/components/PlantDetails';
+import { API_BASE_URL } from '@/lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Trash2, Sprout, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -26,7 +27,7 @@ export default function FavoritesPage() {
 
     const fetchFavorites = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/plants/favorites', {
+            const res = await fetch(`${API_BASE_URL}/api/plants/favorites`, {
                 headers: { Authorization: `Bearer ${user?.token}` },
             });
             const data = await res.json();
@@ -43,7 +44,7 @@ export default function FavoritesPage() {
         if (!confirm('Are you sure you want to remove this plant?')) return;
 
         try {
-            const res = await fetch(`http://localhost:5000/api/plants/favorites/${id}`, {
+            const res = await fetch(`${API_BASE_URL}/api/plants/favorites/${id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${user?.token}` },
             });
@@ -58,7 +59,7 @@ export default function FavoritesPage() {
 
     const handleDetails = async (plantId: number) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/plants/${plantId}`);
+            const res = await fetch(`${API_BASE_URL}/api/plants/${plantId}`);
             const data = await res.json();
             setSelectedPlant(data.data);
         } catch (error) {

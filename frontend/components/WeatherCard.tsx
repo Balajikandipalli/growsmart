@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { Cloud, CloudRain, Sun, Wind, Droplets, Gauge } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -33,7 +34,7 @@ export default function WeatherCard({ location }: WeatherCardProps) {
     const fetchWeather = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`http://localhost:5000/api/weather/current/${location}`);
+            const res = await fetch(`${API_BASE_URL}/api/weather/current/${location}`);
             if (!res.ok) throw new Error('Failed to fetch weather');
             const data = await res.json();
             setWeather(data);
